@@ -1,17 +1,20 @@
-from PRONETNaStarter.utils import constants
+from PRONETNaStarter.utils.constants import * 
 from datetime import datetime
 
 class ContentInstance():
 
 	def __init__(self, contentInstanceDict):
+		print contentInstanceDict
 		self._contentInstanceId = contentInstanceDict.get('contentInstanceId')	
-		self._creationTime      = datetime.strptime(contentInstanceDict.get('creationTime'), 
-													PRONET_DATE_FORMAT)
-		self._lastModifiedTime  = datetime.strptime(contentInstanceDict.get('lastModifiedTime'), 
-													PRONET_DATE_FORMAT)
-		self._contentTypes      = list(contentInstanceDict.get('contentTypes'))
-		self._mimeType          = list(contentInstanceDict.get('mimeType'))
-		self._contentSize       = int(contentInstanceDict.get('contentSize'))
+		self._creationTime      = contentInstanceDict.get('creationTime') and \
+		                          datetime.strptime(contentInstanceDict.get('creationTime'), 
+													PRONET_DATE_FORMAT) or None
+		self._lastModifiedTime  = contentInstanceDict.get('lastModifiedTime') and \
+								  datetime.strptime(contentInstanceDict.get('lastModifiedTime'), 
+													PRONET_DATE_FORMAT) or None
+		self._contentTypes      = contentInstanceDict.get('contentTypes')
+		self._mimeType          = contentInstanceDict.get('mimeType')
+		self._contentSize       = contentInstanceDict.get('contentSize')
 		self._content           = contentInstanceDict.get('content')
 
 	def getContentInstanceId(self):

@@ -1,3 +1,4 @@
+from PRONETNaStarter.rest.domain.ContentInstance import ContentInstance 
 from datetime import datetime
 
 class ContentInstanceInfo():
@@ -34,7 +35,7 @@ class ContentInstanceInfo():
 		Time of Issue    : %s \n
 		Recieved Time    : %s \n
 		-----------------------------\n""" %  (	self._contentInstance.getContent(),
-											 	self._appId(),
+											 	self._appId,
 											 	self._deviceId,
 											 	self._contentInstance.getCreationTime(),
 											 	self._receivedTime) 
