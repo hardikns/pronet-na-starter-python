@@ -4,7 +4,6 @@ from datetime import datetime
 class ContentInstance():
 
 	def __init__(self, contentInstanceDict):
-		print contentInstanceDict
 		self._contentInstanceId = contentInstanceDict.get('contentInstanceId')	
 		self._creationTime      = contentInstanceDict.get('creationTime') and \
 		                          datetime.strptime(contentInstanceDict.get('creationTime'), 
