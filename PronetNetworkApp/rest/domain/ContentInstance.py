@@ -1,9 +1,17 @@
-from PRONETNaStarter.utils.constants import * 
+from PronetNetworkApp.utils.constants import * 
 from datetime import datetime
 
 class ContentInstance():
+	_contentInstanceId = False
+	_creationTime = None
+	_lastModifiedTime = None
+	_contentTypes = []
+	_mimeType = []
+	_contentSize = 0
+	_content = False
 
 	def __init__(self, contentInstanceDict):
+		
 		self._contentInstanceId = contentInstanceDict.get('contentInstanceId')	
 		self._creationTime      = contentInstanceDict.get('creationTime') and \
 		                          datetime.strptime(contentInstanceDict.get('creationTime'), 

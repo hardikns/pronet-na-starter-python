@@ -1,4 +1,4 @@
-from PRONETNaStarter.rest.domain.ContentInstance import ContentInstance 
+from PronetNetworkApp.rest.domain.ContentInstance import ContentInstance 
 from datetime import datetime
 
 class ContentInstanceInfo():
@@ -28,13 +28,13 @@ class ContentInstanceInfo():
 
 	def __str__(self):
 		return """
-		Device Params Received.......\n
-		Content Received : %s \n
-		App Id           : %s \n
-		Device Id        : %s \n 
-		Time of Issue    : %s \n
-		Recieved Time    : %s \n
-		-----------------------------\n""" %  (	self._contentInstance.getContent(),
+		Device Params Received.......
+		Content Received : %s 
+		App Id           : %s 
+		Device Id        : %s  
+		Time of Issue    : %s 
+		Recieved Time    : %s 
+		-----------------------------""" %  (	self._contentInstance.getContent(),
 											 	self._appId,
 											 	self._deviceId,
 											 	self._contentInstance.getCreationTime(),

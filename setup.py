@@ -6,10 +6,11 @@
  Date   - May 2014
 """
 
-from utils import ez_setup
+import ez_setup
 ez_setup.use_setuptools()
 
 from setuptools import setup, find_packages
+
 setup(
     name = "pronet-na-starter",
     version = "0.1",
@@ -18,7 +19,7 @@ setup(
 
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
-    install_requires = ['flask'],
+    install_requires = ['flask', 'flask-rest' , 'requests', ],
 
     package_data = {
         # If any package contains *.txt or *.rst files, include them:
