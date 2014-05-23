@@ -36,17 +36,24 @@ class NetworkController():
 			parser = reqparse.RequestParser()
 			parser.add_argument('command', type=str, required=True, location='args')
 			args = parser.parse_args()
-			commandId = args['command']
+			commandId = int(args['command'])
 			if NetworkController._networkApp and NetworkController._networkApp.isCreated() == True:
-				command = self._networkApp.sendDeviceCommand(deviceId, commandId)
-				resp_string =  "Device Id: " + deviceId + " Command Reference: " + command.getCommand()
-				print resp_string
-				return resp_string, httplib.OK
+				try: 
+					command = NetworkController._networkApp.sendDeviceCommand(deviceId, commandId)
+	
+				except Exception as e:
+					return """SendCommand Failed<br>Request<br>%s<br>json:%s<br>
+					          Error Received from Pronet%s""" % (e[1], e[2], e[3]), httplib.FORBIDDEN
+				else:  
+					resp_string =  "Device Id: " + deviceId + \
+								   " Command Reference: " + str(command.getCommand())
+					print resp_string
+					return resp_string, httplib.OK
 			else:
-				if self._networkApp == False:
+				if NetworkController._networkApp == False:
 					return "Add Device Forbidden, Configure NA", httplib.FORBIDDEN
 				else:
-					return "Device Exists , Device Id: " + deviceId, httplib.FORBIDDEN
+					return "Incorrect Configuration", httplib.FORBIDDEN
 
 	def __init__(self, api):
 		_api = api

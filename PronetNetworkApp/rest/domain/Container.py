@@ -1,12 +1,23 @@
+from PronetNetworkApp.utils.datetime_new import datetime
+import json
+
 class Container():
 	containerId = None                  # String
 	accessRightId = None                # String
 	searchStrings = []                  # List of Strings
-	creationTime = None                 # DateTime
-	lastModifiedTime = None             # DateTime
+	creationTime = None                 # DateTime (converted from Epoch format)
+	lastModifiedTime = None             # DateTime (converted from Epoch format)
 	maxNrOfInstances = None             # Integer
 	contentInstancesReference = None    # String
 	subscriptionReference = None        # String
+
+	def toJson(self):
+		obj_dict = self.__dict__
+		obj_dict['creationTime'] = obj_dict['creationTime'] and \
+		                           obj_dict['creationTime'].epoch() or None
+		obj_dict['lastModifiedTime'] = obj_dict['lastModifiedTime'] and \
+									   obj_dict['lastModifiedTime'].epoch() or None
+		return json.dumps(obj_dict)
 
 	def getContainerId(self):
 		return containerId
