@@ -8,18 +8,39 @@ class Application():
 	creationTime = None                  # Datetime (converted from Epoch format)
 	lastModifiedTime = None              # Datetime (converted from Epoch format)
 	aPoC = None                          # String
-	aPocPaths = []                       # List of Strings
+	aPoCPaths = []                       # List of Strings
 	containersReference = None           # String
 	groupsReference = None               # String 
 	accessRightsReference = None         # String
 	notificationChannelReference = None  # String
 
+	def __init__(self, obj_dict=None):
+		self.appId = None                         
+		self.accessRightID = None                                
+		self.searchStrings = []                   
+		self.creationTime = None                  
+		self.lastModifiedTime = None              
+		self.aPoC = None                          
+		self.aPoCPaths = []                       
+		self.containersReference = None           
+		self.groupsReference = None                
+		self.accessRightsReference = None         
+		self.notificationChannelReference = None  
+		if obj_dict == None:
+			return
+		for key in self.__dict__.keys():
+			self.__dict__[key] = obj_dict.get(key, None)
+		if isinstance(self.creationTime, (int, long)): 
+			self.creationTime = datetime.fromEpoch(self.creationTime)
+		if isinstance(self.lastModifiedTime, (int, long)): 
+			self.lastModifiedTime = datetime.fromEpoch(self.lastModifiedTime)
+
 	def toJson(self):
 		obj_dict = self.__dict__
 		obj_dict['creationTime'] = obj_dict['creationTime'] and \
-		                           obj_dict['creationTime'].epoch() or None
+		                           obj_dict['creationTime'].epoch() or 0
 		obj_dict['lastModifiedTime'] = obj_dict['lastModifiedTime'] and \
-									   obj_dict['lastModifiedTime'].epoch() or None
+									   obj_dict['lastModifiedTime'].epoch() or 0
 		return json.dumps(obj_dict)
 
 	def getAppId(self):
@@ -40,8 +61,8 @@ class Application():
 	def getAPoC(self):
 	    return self.aPoC
 
-	def getAPocPaths(self):
-	    return self.aPocPaths
+	def getAPoCPaths(self):
+	    return self.aPoCPaths
 
 	def getContainersReference(self):
 	    return self.containersReference
@@ -73,8 +94,8 @@ class Application():
 	def setAPoC(self, aPoC):
 	    self.aPoC = aPoC
 
-	def setAPocPaths(self, aPocPaths):
-	    self.aPocPaths = aPocPaths
+	def setAPoCPaths(self, aPocPaths):
+	    self.aPoCPaths = aPocPaths
 
 	def setContainersReference(self, containersReference):
 	    self.containersReference = containersReference

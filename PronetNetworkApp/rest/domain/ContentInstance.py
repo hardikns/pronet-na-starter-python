@@ -14,12 +14,19 @@ class ContentInstance():
 	def toJson(self):
 		obj_dict = self.__dict__
 		obj_dict['creationTime'] = obj_dict['creationTime'] and \
-		                           obj_dict['creationTime'].epoch() or None
+		                           obj_dict['creationTime'].epoch() or 0
 		obj_dict['lastModifiedTime'] = obj_dict['lastModifiedTime'] and \
-									   obj_dict['lastModifiedTime'].epoch() or None
+									   obj_dict['lastModifiedTime'].epoch() or 0
 		return json.dumps(obj_dict)
 
 	def __init__(self, obj_dict=None):
+		self.contentInstanceId = False       
+		self.creationTime = None             
+		self.lastModifiedTime = None		
+		self.contentTypes = []				
+		self.mimeType = []					
+		self.contentSize = 0					
+		self.content = False					
 		if obj_dict == None:
 			return
 		for key in self.__dict__.keys():
@@ -28,18 +35,6 @@ class ContentInstance():
 			self.creationTime = datetime.fromEpoch(self.creationTime)
 		if isinstance(self.lastModifiedTime, (int, long)): 
 			self.lastModifiedTime = datetime.fromEpoch(self.lastModifiedTime)
-
-	# def __init__(self, contentInstanceDict):
-		
-	# 	self.contentInstanceId = contentInstanceDict.get('contentInstanceId')	
-	# 	self.creationTime      = contentInstanceDict.get('creationTime') and \
-	# 	                          datetime.fromEpoch(contentInstanceDict.get('creationTime')) or None
-	# 	self.lastModifiedTime  = contentInstanceDict.get('lastModifiedTime') and \
-	# 							  datetime.fromEpoch(contentInstanceDict.get('lastModifiedTime')) or None
-	# 	self.contentTypes      = contentInstanceDict.get('contentTypes')
-	# 	self.mimeType          = contentInstanceDict.get('mimeType')
-	# 	self.contentSize       = contentInstanceDict.get('contentSize')
-	# 	self.content           = contentInstanceDict.get('content')
 
 	def getContentInstanceId(self):
 		return self.contentInstanceId

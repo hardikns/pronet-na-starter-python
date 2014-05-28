@@ -55,12 +55,37 @@ class NetworkController():
 				else:
 					return "Incorrect Configuration", httplib.FORBIDDEN
 
+	class AutoConfigure(Resource):
+		def get(self):
+			parser = reqparse.RequestParser()
+			parser.add_argument('m2mPoC', type=str, required=True, location='args')
+			args = parser.parse_args()
+			m2mPoC = args.get('m2mPoC', False)
+
+			aPoC = request.url_root
+
+			if not NetworkController._networkApp:
+				try: 
+					NetworkController._networkApp = NetworkApp.autoConfigure(m2mPoC, aPoC)
+				except Exception as e:
+					print e
+					return """Communication with Pronet failed<br>Request<br>%s<br>json:%s<br>
+					          Error Received from Pronet%s""" % (e[1], e[2], e[3]), httplib.FORBIDDEN
+				else:
+					return "Network App Configured with Pronet at " + m2mPoC + \
+							" appId " +  NetworkController._networkApp.getAppId(), httplib.OK
+			else:
+				return "Already Configured with " + NetworkController._networkApp.getm2mPoC() + \
+						" appId " +  NetworkController._networkApp.getAppId(), httplib.FORBIDDEN
+				 
+
 	def __init__(self, api):
 		_api = api
 		api.add_resource(self.ReceiveDeviceParams, 
 			"/pronet-na-starter/applications/<string:appId>/containers/<string:deviceId>/contentinstances")
 		api.add_resource(self.Configure,'/pronet-na-starter/configure')
 		api.add_resource(self.SendCommand, '/pronet-na-starter/send-command/<string:deviceId>')
+		api.add_resource(self.AutoConfigure, '/pronet-na-starter/autoconfigure')
 
 			
 

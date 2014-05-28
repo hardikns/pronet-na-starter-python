@@ -15,9 +15,9 @@ class Command():
 	def toJson(self):
 		obj_dict = self.__dict__
 		obj_dict['creationTime'] = obj_dict['creationTime'] and \
-		                           obj_dict['creationTime'].epoch() or None
+		                           obj_dict['creationTime'].epoch() or 0
 		obj_dict['lastModifiedTime'] = obj_dict['lastModifiedTime'] and \
-									   obj_dict['lastModifiedTime'].epoch() or None
+									   obj_dict['lastModifiedTime'].epoch() or 0
 		return json.dumps(obj_dict)
 
 	def __init__(self, obj_dict=None):
