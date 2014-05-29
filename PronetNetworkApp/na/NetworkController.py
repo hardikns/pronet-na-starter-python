@@ -59,16 +59,17 @@ class NetworkController():
 		def get(self):
 			parser = reqparse.RequestParser()
 			parser.add_argument('m2mPoC', type=str, required=True, location='args')
+			parser.add_argument('aPoCPath', type=str, required=True, location='args')
 			args = parser.parse_args()
 			m2mPoC = args.get('m2mPoC', False)
+			aPoCPaths = [args.get('aPoCPath', False)]
 
 			aPoC = request.url_root
 
 			if not NetworkController._networkApp:
 				try: 
-					NetworkController._networkApp = NetworkApp.autoConfigure(m2mPoC, aPoC)
+					NetworkController._networkApp = NetworkApp.autoConfigure(m2mPoC, aPoC, aPoCPaths)
 				except Exception as e:
-					print e
 					return """Communication with Pronet failed<br>Request<br>%s<br>json:%s<br>
 					          Error Received from Pronet%s""" % (e[1], e[2], e[3]), httplib.FORBIDDEN
 				else:

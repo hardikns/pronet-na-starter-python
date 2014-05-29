@@ -23,10 +23,11 @@ class NetworkApp():
 		return self._m2mPoC
 
 	@classmethod
-	def autoConfigure(cls, m2mPoC, aPoC):
+	def autoConfigure(cls, m2mPoC, aPoC, aPoCPaths):
 		jsonBody = Application(obj_dict={'aPoC':aPoC, 
 								'searchStrings': APP_SEARCH_STRING_LIST, 
-								'accessRightID': APP_ACCESS_RIGHTS_ID }).toJson()
+								'accessRightID': APP_ACCESS_RIGHTS_ID, 
+								'aPoCPaths':aPoCPaths }).toJson()
 		commandUrl = m2mPoC + "/pronet/applications"
 		headers={'content-type': 'application/json'}
 		try:
@@ -43,7 +44,6 @@ class NetworkApp():
 		command.setCommand(commandId)
 		commandUrl = self._m2mPoC + "/pronet/applications/" + \
 					 self._appId + "/containers/" + deviceId + "/commands"
-		print command.__dict__
 		headers={'content-type': 'application/json'}
 		
 		try:

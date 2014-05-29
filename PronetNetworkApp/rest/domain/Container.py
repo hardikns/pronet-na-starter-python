@@ -38,13 +38,13 @@ class Container():
 		return json.dumps(obj_dict)
 
 	def getContainerId(self):
-		return containerId
+		return self.containerId
 
 	def getAccessRightId(self):
-		return accessRightId
+		return self.accessRightId
 
 	def getSearchStrings(self):
-		return searchStrings
+		return self.searchStrings
 
 	def getCreationTime(self):
 		return creationTime
